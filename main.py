@@ -2,7 +2,7 @@ import requests
 
 import db.dbworks
 from db.dbworks import storeAbitur, storePriority, getAllAbitur, getSpecPlaces, getPriorityBy
-from  db.dbworks import createSuperRecord, cleatSuperlist, clearAbiturs, clearPriority
+from db.dbworks import createSuperRecord, cleatSuperlist, clearAbiturs, clearPriority
 from processing import normalizeCode
 
 def download(url):
@@ -16,10 +16,9 @@ def download(url):
         original = bool(item["has_original"])
         conditions = item["enroll_condition"]
         payed_contract = bool(item["has_paid_contract"])
-        if original == True and conditions == 'ОМ' :
+        if original == True and conditions == 'ОМ' and payed_contract == False:
             code = normalizeCode(code)
             storeAbitur(code, points)
-    #        print (url.code)
             storePriority(url.code, code, int(item["priority"]))
 
 
